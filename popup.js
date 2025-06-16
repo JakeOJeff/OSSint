@@ -38,7 +38,24 @@ function runOSINT(input){
 
     //ERROR fallback
     else {
-        resultDiv.textContent = "UNKNOWN"
+        resultDiv.textContent = "Enabling"
+        chrome.storage.local.get("dorkFilters", (res) => {
+            const { filetype, inurl, intitle } = res.dorkFilters || {} ;
+
+            let queryParts = [];
+
+            if (filetype) queryParts.push(`filetype:${filetype}`);
+            if (inurl) queryParts.push(`inurl:${inurl}`);
+            if (intitle) queryParts.push(`intitle:${intitle}`);
+
+            queryParts.push(selection)
+
+            const dorkQuery = queryParts.join(" ");
+            const url = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
+
+            
+            chrome.tabs.create({ url })
+        })
     }
 }
 

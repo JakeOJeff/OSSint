@@ -6,14 +6,8 @@ chrome.runtime.onInstalled.addListener(() => {
         id: "osint",
         title: "OSINT Lookup: \"%s\"",
         contexts: ["selection"]
-    })
-
-
-    chrome.contextMenus.create({
-        id: "scan",
-        title: "Scan : \"%s\"",
-        contexts: ["selection"]
     });
+
 });
 
 
@@ -23,10 +17,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     
     const selection = info.selectionText.trim();
 
-    if (info.menuItemId === "scan") {
-        chrome.storage.local.set({ osintData: selection});
-        chrome.action.openPopup();
-    }
 
     if (info.menuItemId === "osint") {
         chrome.storage.local.get("dorkFilters", (res) => {
@@ -44,8 +34,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
             const url = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
 
             
-            chrome.tabs.create({ url });
-        });
+            chrome.tabs.create({ url })
+        })
     }
 });
 
