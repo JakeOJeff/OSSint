@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>OSSint</title>
+        <link href="style.css" rel="stylesheet">
     </head>
     <body>
         <h3>OSSint H-Tool</h3>
@@ -9,7 +10,25 @@
         <button id="lookup">Scan</button>
         <div id="results"></div>
 
+        <h3>Google Dork Settings</h3>
 
-        <script src="popup.js"></script>
+        <label>
+            Filetype:
+            <input id="filetype" type="text" placeholder="e.g. pdf, xls" />
+        </label>
+
+        <label>
+            In URL:
+            <input id="inurl" type="text" placeholder="e.g. login, admin" />
+        </label>
+
+        <label>
+            In Title:
+            <input id="intitle" type="text" placeholder="e.g. index.of, dashboard" />
+        </label>
+
+        <button id="saveDorkOptions">Save Dork Settings</button>
     </body>
+            <script src="popup.js"></script>
+    
 </html>

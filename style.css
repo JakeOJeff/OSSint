@@ -1,0 +1,27 @@
+ body {
+      font-family: sans-serif;
+      padding: 10px;
+      width: 250px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 6px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
