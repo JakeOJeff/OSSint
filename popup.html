@@ -3,16 +3,21 @@
     <head>
         <title>OSSint</title>
         <link href="./src/output.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+
     </head>
     <body>
-        <span class="text-2xl font-medium">OSINT Tool</span>
+        <span class="text-3xl font-bold text-white">OSSINT H-Tool</span>
+        <br>
         <span class="font-medium text-sky-500">Scan Patterns/IP/Domain/Email</span>
 
         <input type="text" id="input" placeholder="Enter email, IP, domain" />
-        <button id="lookup">Scan</button>
+        <button class="p-1 pr-2 pl-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-0.5 text-2xl
+         rounded-md border-2 bg-amber-300 hover:bg-amber-50 border-amber-300 hover:border-amber-50
+          text-amber-50 hover:text-amber-300 font-serif" id="lookup">Scan</button>
         <div id="results"></div>
 
-        <h3 class="text-3xl font-bold underline" >Google Dork Settings</h3>
+        <h3 class="text-3xl font-bold text-white" >Dorking Settings</h3>
 
         <label>
             Filetype:
