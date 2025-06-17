@@ -14,30 +14,20 @@ chrome.runtime.onInstalled.addListener(() => {
 // Left Clicked Menu ( Main Popup )
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    
     const selection = info.selectionText.trim();
 
-
     if (info.menuItemId === "osint") {
-        chrome.storage.local.get("dorkFilters", (res) => {
-            const { filetype, inurl, intitle } = res.dorkFilters || {} ;
+        // Save the selection text into local storage for the popup to access
+        chrome.storage.local.set({ osintData: selection }, () => {
+            // Optionally, you can open the popup or notify the user here
+            console.log("Selection stored for popup.");
+        });
 
-            let queryParts = [];
-
-            if (filetype) queryParts.push(`filetype:${filetype}`);
-            if (inurl) queryParts.push(`inurl:${inurl}`);
-            if (intitle) queryParts.push(`intitle:${intitle}`);
-
-            queryParts.push(selection)
-
-            const dorkQuery = queryParts.join(" ");
-            const url = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
-
-            
-            chrome.tabs.create({ url })
-        })
+        // Open the extension popup (optional, or guide user to click extension icon)
+        chrome.action.openPopup(); // Optional, available in MV3
     }
 });
+
 
 // onInstalled → Runs once when extension is installed.
 // contextMenus.create → Adds a nenu item when right clicked on selected text
