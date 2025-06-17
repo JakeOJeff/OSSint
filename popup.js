@@ -1,22 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => { // HTML fully Loaded
-    /*chrome.storage.local.get("osintData", (data) => {
+document.addEventListener("DOMContentLoaded", () => {
+    // Load the saved OSINT input if available
+    chrome.storage.local.get("osintData", (data) => {
         if (data.osintData) {
             document.getElementById("input").value = data.osintData;
-            runOSINT(data.osintData);
+            chrome.storage.local.remove("osintData");
         }
-    });*/
+    });
+
+    // Save filter settings on scan
     document.getElementById("lookup").addEventListener("click", () => {
-        const value = document.getElementById("input").value.trim();
-        runOSINT(value);
+        const input = document.getElementById("input").value.trim();
+        const filetype = document.getElementById("filetype").value.trim();
+        const inurl = document.getElementById("inurl").value.trim();
+        const intitle = document.getElementById("intitle").value.trim();
+
+        // Save filters to storage
+        chrome.storage.local.set({
+            dorkFilters: { filetype, inurl, intitle }
+        });
+
+        runOSINT(input, { filetype, inurl, intitle });
     });
 });
 
-function runOSINT(input) {
+function runOSINT(input, filters) {
     const resultDiv = document.getElementById("results");
     resultDiv.textContent = "Scanning...";
-
-    // Save current input in local storage for fallback
-    chrome.storage.local.set({ osintData: input });
 
     // IP CHECK
     if (/^\d{1,3}(\.\d{1,3}){3}$/.test(input)) {
@@ -43,28 +52,23 @@ function runOSINT(input) {
             .catch(err => resultDiv.textContent = "Domain lookup failed");
     }
 
-    // FALLBACK TO DORK
+    // GOOGLE DORK FALLBACK
     else {
-        chrome.storage.local.get("dorkFilters", (res) => {
-            const { filetype, inurl, intitle } = res.dorkFilters || {};
-            let queryParts = [];
+        const queryParts = [];
 
-            if (filetype) queryParts.push(`filetype:${filetype}`);
-            if (inurl) queryParts.push(`inurl:${inurl}`);
-            if (intitle) queryParts.push(`intitle:${intitle}`);
+        if (filters?.filetype) queryParts.push(`filetype:${filters.filetype}`);
+        if (filters?.inurl) queryParts.push(`inurl:${filters.inurl}`);
+        if (filters?.intitle) queryParts.push(`intitle:${filters.intitle}`);
 
-            queryParts.push(input);
+        queryParts.push(input);
 
-            const dorkQuery = queryParts.join(" ");
-            const url = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
-            chrome.tabs.create({ url });
-        });
+        const dorkQuery = queryParts.join(" ");
+        const url = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
+        chrome.tabs.create({ url });
     }
-    //chrome.storage.local.remove("osintData");
 }
 
 function isValidDomain(domain) {
-    // Simple regex for basic domain validation
     const pattern = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
     return pattern.test(domain);
 }
