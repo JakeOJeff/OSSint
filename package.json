@@ -18,6 +18,8 @@
   "homepage": "https://github.com/JakeOJeff/OSSint#readme",
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
+    "dotenv": "^16.5.0",
+    "save": "^2.9.0",
     "tailwindcss": "^4.1.10"
   }
 }

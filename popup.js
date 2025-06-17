@@ -39,7 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function runOSINT(input, filters) {
     const resultDiv = document.getElementById("results");
     resultDiv.textContent = "Scanning...";
+    require('dotenv').config();
 
+    const HIBP_API_KEY = "nil"; 
+    const API_NINJAS_KEY = process.env.API_NINJAS_KEY // "YOUR_API_NINJAS
     // IP CHECK
     if (/^\d{1,3}(\.\d{1,3}){3}$/.test(input)) {
         fetch(`https://ipapi.co/${input}/json/`)
@@ -50,19 +53,61 @@ function runOSINT(input, filters) {
 
     // EMAIL CHECK
     else if (input.includes("@")) {
-        resultDiv.textContent = "Checking for breaches... (UNAVAILABLE)";
+        resultDiv.textContent = "Checking for breaches...";
+        fetch(`https://haveibeenpwned.com/api/v3/breachedaccount/${encodeURIComponent(input)}?truncateResponse=false`, {
+            headers: {
+                "hibp-api-key": HIBP_API_KEY,
+                "User-Agent": "NIL FOR NOW"
+            }
+        })
+        .then(res => {
+            if (res.status === 404) {
+                resultDiv.textContent = "No breaches found.";
+                return;
+            }
+            if (!res.ok) throw new Error("Failed to fetch breach data");
+            return res.json();
+        })
+        .then(data => {
+            if (data) {
+                resultDiv.textContent = "Breaches Found:\n" + JSON.stringify(data, null, 2);
+            }
+        })
+        .catch(err => resultDiv.textContent = `Error: ${err.message}`);
     }
 
-    // DOMAIN CHECK
+    // DOMAIN CHECK (API Ninjas)
     else if (input.includes(".")) {
         if (!isValidDomain(input)) {
             resultDiv.textContent = "Invalid domain format";
             return;
         }
-        fetch(`https://api.whoxy.com/?key=TEMP&whois=${input}`)
-            .then(res => res.json())
-            .then(data => resultDiv.textContent = JSON.stringify(data, null, 2))
-            .catch(err => resultDiv.textContent = "Domain lookup failed");
+        resultDiv.textContent = "Checking domain info...";
+        console.log("Lookup button clicked with input:", input);
+
+        fetch(`https://api.api-ninjas.com/v1/whois?domain=${input}`, {
+            headers: {
+                "X-Api-Key": API_NINJAS_KEY
+            }
+        })
+        .then(async res => {
+            if (!res.ok) {
+                const errorText = await res.text();
+                throw new Error(`API error: ${res.status} - ${errorText}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (Object.keys(data).length === 0) {
+                resultDiv.textContent = "No WHOIS data found.";
+            } else {
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            }
+        })
+        .catch(err => {
+            resultDiv.textContent = `Error: ${err.message}`;
+        });
+
     }
 
     // GOOGLE DORK FALLBACK
