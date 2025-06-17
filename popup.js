@@ -21,6 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         runOSINT(input, { filetype, inurl, intitle });
     });
+
+    document.getElementById("saveDorkOptions").addEventListener("click", () => {
+
+        chrome.storage.local.set({
+            dorkFilters: { filetype, inurl, intitle }
+        })
+    })
 });
 
 function runOSINT(input, filters) {

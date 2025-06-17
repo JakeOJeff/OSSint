@@ -1,4 +1,7 @@
- body {
+ @import "tailwindcss";
+
+ 
+/* body {
       font-family: sans-serif;
       padding: 10px;
       width: 250px;
@@ -24,4 +27,4 @@
     }
     button:hover {
       background-color: #3367d6;
-    }
+    }*/
