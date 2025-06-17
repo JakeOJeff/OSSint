@@ -1,10 +1,10 @@
 
  html
 {
-    width: 300px;  /* max: 800px */
-    height: 400px; /* max: 600px */
+    width: 400px;  /* max: 800px */
+    height: 500px; /* max: 600px */
         border: 2px solid rgb(26, 26, 26);
-    background-color: rgb(17, 17, 17);
+    background-color: rgb(27, 27, 27);
 }
 /* body {
       font-family: sans-serif;

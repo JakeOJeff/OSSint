@@ -9,18 +9,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Save filter settings on scan
     document.getElementById("lookup").addEventListener("click", () => {
-        const input = document.getElementById("input").value.trim();
-        const filetype = document.getElementById("filetype").value.trim();
-        const inurl = document.getElementById("inurl").value.trim();
-        const intitle = document.getElementById("intitle").value.trim();
+    const input = document.getElementById("input").value.trim();
+    const filetypeRaw = document.getElementById("filetype").value.trim();
+    const inurl = document.getElementById("inurl").value.trim();
+    const intitle = document.getElementById("intitle").value.trim();
 
-        // Save filters to storage
-        chrome.storage.local.set({
-            dorkFilters: { filetype, inurl, intitle }
-        });
+    // Convert "pdf, xls" → ["pdf", "xls"]
+    const filetype = filetypeRaw
+        ? filetypeRaw.split(",").map(ft => ft.trim()).filter(Boolean)
+        : [];
 
-        runOSINT(input, { filetype, inurl, intitle });
+    // Save filters to storage
+    chrome.storage.local.set({
+        dorkFilters: { filetype, inurl, intitle }
     });
+
+    runOSINT(input, { filetype, inurl, intitle });
+});
+    // Load saved dork filters
 
     document.getElementById("saveDorkOptions").addEventListener("click", () => {
 
@@ -63,7 +69,16 @@ function runOSINT(input, filters) {
     else {
         const queryParts = [];
 
-        if (filters?.filetype) queryParts.push(`filetype:${filters.filetype}`);
+if (filters?.filetype) {
+    const filetype = Array.isArray(filters.filetype)
+        ? filters.filetype
+        : filters.filetype.split(",").map(ft => ft.trim()).filter(Boolean);
+
+    if (filetype.length > 0) {
+        const filetypeQuery = filetype.map(ft => `filetype:${ft}`).join(" OR ");
+        queryParts.push(`(${filetypeQuery})`);
+    }
+}
         if (filters?.inurl) queryParts.push(`inurl:${filters.inurl}`);
         if (filters?.intitle) queryParts.push(`intitle:${filters.intitle}`);
 
