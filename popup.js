@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => { // HTML fully Loaded
-    chrome.storage.local.get("osintData", (data) => {
+    /*chrome.storage.local.get("osintData", (data) => {
         if (data.osintData) {
             document.getElementById("input").value = data.osintData;
             runOSINT(data.osintData);
         }
-    });
+    });*/
     document.getElementById("lookup").addEventListener("click", () => {
         const value = document.getElementById("input").value.trim();
         runOSINT(value);
@@ -60,6 +60,7 @@ function runOSINT(input) {
             chrome.tabs.create({ url });
         });
     }
+    //chrome.storage.local.remove("osintData");
 }
 
 function isValidDomain(domain) {

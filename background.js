@@ -17,14 +17,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     const selection = info.selectionText.trim();
 
     if (info.menuItemId === "osint") {
-        // Save the selection text into local storage for the popup to access
         chrome.storage.local.set({ osintData: selection }, () => {
-            // Optionally, you can open the popup or notify the user here
             console.log("Selection stored for popup.");
         });
 
-        // Open the extension popup (optional, or guide user to click extension icon)
-        chrome.action.openPopup(); // Optional, available in MV3
+        chrome.action.openPopup(); 
     }
 });
 
