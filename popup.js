@@ -39,10 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
 function runOSINT(input, filters) {
     const resultDiv = document.getElementById("results");
     resultDiv.textContent = "Scanning...";
-    require('dotenv').config();
 
     const HIBP_API_KEY = "nil"; 
-    const API_NINJAS_KEY = process.env.API_NINJAS_KEY // "YOUR_API_NINJAS
+    const API_NINJAS_KEY = /*HARDCODE*/ "nil"; 
+
+    if (!API_NINJAS_KEY) {
+        console.error("API_NINJAS_KEY not found in environment variables!");
+    }
     // IP CHECK
     if (/^\d{1,3}(\.\d{1,3}){3}$/.test(input)) {
         fetch(`https://ipapi.co/${input}/json/`)
