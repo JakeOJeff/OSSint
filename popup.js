@@ -19,10 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ? filetypeRaw.split(",").map(ft => ft.trim()).filter(Boolean)
         : [];
 
-    // Save filters to storage
-    chrome.storage.local.set({
-        dorkFilters: { filetype, inurl, intitle }
-    });
 
     runOSINT(input, { filetype, inurl, intitle });
 });
@@ -33,6 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.storage.local.set({
             dorkFilters: { filetype, inurl, intitle }
         })
+        if (filetype, inurl, intitle !== null){
+                      alert("Settings have been saved to Session Storage!");
+        }
+
     })
 });
 
