@@ -21,24 +21,34 @@ document.addEventListener("DOMContentLoaded", () => {
         runOSINT(input, { filetype, inurl, intitle });
     });
 
-    // Attach Save Dork Settings handler
-    document.getElementById("saveDorkOptions").addEventListener("click", () => {
-        const filetypeRaw = document.getElementById("filetype").value.trim();
-        const inurl = document.getElementById("inurl").value.trim();
-        const intitle = document.getElementById("intitle").value.trim();
-
-        const filetype = filetypeRaw
-            ? filetypeRaw.split(",").map(ft => ft.trim()).filter(Boolean)
-            : [];
-
-        chrome.storage.local.set({
-            dorkFilters: { filetype, inurl, intitle }
+    document.getElementById("detect").addEventListener("click", () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            if (tabs && tabs.length > 0) {
+                const currentURL = tabs[0].url;
+                console.log("Current URL:", currentURL);
+                document.getElementById("inputTool").value = currentURL;
+            }
         });
-
-        if (filetype.length || inurl || intitle) {
-            alert("Settings have been saved to Session Storage!");
-        }
     });
+
+// Attach Save Dork Settings handler
+document.getElementById("saveDorkOptions").addEventListener("click", () => {
+    const filetypeRaw = document.getElementById("filetype").value.trim();
+    const inurl = document.getElementById("inurl").value.trim();
+    const intitle = document.getElementById("intitle").value.trim();
+
+    const filetype = filetypeRaw
+        ? filetypeRaw.split(",").map(ft => ft.trim()).filter(Boolean)
+        : [];
+
+    chrome.storage.local.set({
+        dorkFilters: { filetype, inurl, intitle }
+    });
+
+    if (filetype.length || inurl || intitle) {
+        alert("Settings have been saved to Session Storage!");
+    }
+});
 });
 
 // Tab switching logic

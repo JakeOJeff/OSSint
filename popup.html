@@ -15,35 +15,39 @@
     </div>
 
     <div id="scan" class="tabcontent">
-        <h3>Scan</h3>
+        <h3>Systems Scanner [V1.23]</h3>
         <div class="container">
             <input class="custom-input" type="text" id="input" placeholder="Enter keyword, email, IP, domain" />
             <button type="button" id="lookup" class="custom-button">Scan</button>
+            <div id="results" class="results-text"></div>
+
         </div>
 
-        <div id="results" class="results-box"></div>
 
         <h3>Dorking Settings</h3>
         <div class="container">
-            <label>
-                <span>Filetype (Separate with Comma):</span>
+                <h4>Filetypes (Separate with Comma):</h4>
                 <input class="custom-input" id="filetype" type="text" placeholder="e.g. pdf, xls" />
-            </label>
-            <label>
-                <span>In URL:</span>
+
+                <h4>In URL:</h4>
                 <input class="custom-input" id="inurl" type="text" placeholder="e.g. login, admin" />
-            </label>
-            <label>
-                <span>In Title:</span>
+
+                <h4>In Title:</h4>
                 <input class="custom-input" id="intitle" type="text" placeholder="e.g. index.of, dashboard" />
-            </label>
+
             <button type="button" id="saveDorkOptions" class="custom-button">Save Dork Settings</button>
         </div>
     </div>
 
     <div id="tools" class="tabcontent">
         <h3>Tools</h3>
-        <p>Tools content goes here...</p>
+        <div class="container">
+            <input class="custom-input" type="text" id="inputTool" placeholder="Enter data" />
+            <button type="button" id="lookupTool" class="custom-button">Run Extension</button>
+            <button type="button" id="detect" class="custom-button">Detect</button>
+                        <div id="resultsTool" class="results-text"></div>
+        </div>
+             <h3>Extensions/Tools</h3>   
     </div>
 
     <div id="scripts" class="tabcontent">
