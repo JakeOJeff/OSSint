@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    
     // Save filter settings on scan
     document.getElementById("lookup").addEventListener("click", () => {
     const input = document.getElementById("input").value.trim();
