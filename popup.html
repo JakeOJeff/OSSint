@@ -6,40 +6,56 @@
     <link href="style.css" rel="stylesheet">
 
 </head>
+
 <body>
+
     <h2>OSSint H-Tool</h2>
-    <div id="dorking">
-        <h4>Scan Patterns/IP/Domain/Email</h4>
+
+    <div class="tab">
+        <button class="tablinks" data-tab="scan">Scan</button>
+<button class="tablinks" data-tab="tools">Tools</button>
+<button class="tablinks" data-tab="scripts">Scripts</button>
+    </div>
+
+    <div id="scan" class="tabcontent">
+        <h3>Scan</h3>
         <div class="container">
-            <input class="input-container" type="text" id="input" placeholder="Enter keyword, email, IP, domain" />
-            <button id="lookup">Scan</button>
+            <input class="custom-input" type="text" id="input" placeholder="Enter keyword, email, IP, domain" />
+            <button id="lookup" class="custom-button">Scan</button>
         </div>
+
         <div id="results"></div>
 
         <h3>Dorking Settings</h3>
         <div class="container">
-                <label>
-                    <span>Filetype (Separate with Comma):</span>
-                    <input class="input-container" id="filetype" type="text" placeholder="e.g. pdf, xls" />
-                </label>
-                <label>
-                    <span>In URL:</span>
-                    <input class="input-container" id="inurl" type="text" placeholder="e.g. login, admin" />
-                </label>
-                <label>
-                    <span>In Title:</span>
-                    <input class="input-container" id="intitle" type="text" placeholder="e.g. index.of, dashboard" />
-                </label>
-                <button id="saveDorkOptions">
-                    Save Dork Settings
-                </button>
+            <label>
+                <span>Filetype (Separate with Comma):</span>
+                <input class="custom-input" id="filetype" type="text" placeholder="e.g. pdf, xls" />
+            </label>
+            <label>
+                <span>In URL:</span>
+                <input class="custom-input" id="inurl" type="text" placeholder="e.g. login, admin" />
+            </label>
+            <label>
+                <span>In Title:</span>
+                <input class="custom-input" id="intitle" type="text" placeholder="e.g. index.of, dashboard" />
+            </label>
+            <button id="saveDorkOptions" class="custom-button">Save Dork Settings</button>
         </div>
     </div>
 
-
-    <div id="tools" class="tabContent">
-
+    <div id="tools" class="tabcontent">
+        <h3>Tools</h3>
+        <p>Tools content goes here...</p>
     </div>
+
+    <div id="scripts" class="tabcontent">
+        <h3>Scripts</h3>
+        <p>Scripts content goes here...</p>
+    </div>
+
+
+
 </body>
 
 <script src="popup.js"></script>

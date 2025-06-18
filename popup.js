@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    
+    document.getElementById("defaultOpen").click();
+
     // Save filter settings on scan
     document.getElementById("lookup").addEventListener("click", () => {
     const input = document.getElementById("input").value.trim();
@@ -36,6 +37,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     })
 });
+  function openTab(evt, tabName) {
+    const tabcontent = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    const tablinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].classList.remove("active");
+    }
+
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.classList.add("active");
+  }
+
+  // Wait until the DOM is fully loaded
+  window.addEventListener("DOMContentLoaded", () => {
+    const tabButtons = document.querySelectorAll(".tablinks");
+
+    tabButtons.forEach(button => {
+      button.addEventListener("click", function (evt) {
+        const tabName = this.getAttribute("data-tab");
+        openTab(evt, tabName);
+      });
+    });
+
+    // Trigger click on the first tab
+    if (tabButtons.length > 0) {
+      tabButtons[0].click();
+    }
+  });
 
 function runOSINT(input, filters) {
     const resultDiv = document.getElementById("results");
