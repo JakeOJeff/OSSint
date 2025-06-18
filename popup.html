@@ -6,27 +6,18 @@
     <link href="style.css" rel="stylesheet">
 
 </head>
-
-<body class="bg-black">
-
-    <div id="dorking" class="tabContent">
-            <h2>OSSint H-Tool</h2>
-            <h4>Scan Patterns/IP/Domain/Email</h4>
-        <div class="container"> <!-- 👈 Add outer padding & width limit -->
-            <div > <input class="input-container" type="text" id="input"
-                    placeholder="Enter keyword, email, IP, domain" />
-            </div>
-            <button id="lookup">
-                Scan
-            </button>
+<body>
+    <h2>OSSint H-Tool</h2>
+    <div id="dorking">
+        <h4>Scan Patterns/IP/Domain/Email</h4>
+        <div class="container">
+            <input class="input-container" type="text" id="input" placeholder="Enter keyword, email, IP, domain" />
+            <button id="lookup">Scan</button>
         </div>
-
         <div id="results"></div>
 
-        <br>
         <h3>Dorking Settings</h3>
         <div class="container">
-            <div>
                 <label>
                     <span>Filetype (Separate with Comma):</span>
                     <input class="input-container" id="filetype" type="text" placeholder="e.g. pdf, xls" />
@@ -39,16 +30,13 @@
                     <span>In Title:</span>
                     <input class="input-container" id="intitle" type="text" placeholder="e.g. index.of, dashboard" />
                 </label>
-            </div>
-
-            <div>
                 <button id="saveDorkOptions">
                     Save Dork Settings
                 </button>
-            </div>
         </div>
     </div>
-    </div>
+
+
     <div id="tools" class="tabContent">
 
     </div>
