@@ -1,69 +1,60 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>OSSint</title>
-    <link href="./src/output.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-
 </head>
 
 <body>
-    <br>
-    <span class="text-4xl font-serif font-bold text-white">OSSint H-Tool</span>
-    <br>
-    <span class="font-medium text-amber-100">Scan Patterns/IP/Domain/Email</span>
-    <br>
-    <div class="flex flex-col sm:flex-row gap-2">
+    <h2>OSSint H-Tool</h2>
 
-        <input type="text" id="input" placeholder="Enter keyword, email, IP, domain" class="w-full sm:w-auto px-4 py-2 text-lg font-serif border-2 border-amber-300 rounded-md 
-           placeholder-white text-white focus:outline-none focus:ring-2 
-           focus:ring-amber-300 focus:border-amber-400 transition duration-300" />
-        <button id="lookup" class="px-3 py-2 text-xl font-serif rounded-md border-2 
-           bg-amber-300 text-white border-amber-300 
-           hover:bg-amber-50 hover:text-amber-300 hover:border-amber-50 
-           transition duration-300 ease-in-out transform hover:-translate-y-0.5">
-            Scan
-        </button>
-        <div class="font-serif text-1x1 text-amber-100" id="results"></div>
+    <div class="tab">
+        <button type="button" class="tablinks" data-tab="scan">Scan</button>
+        <button type="button" class="tablinks" data-tab="tools">Tools</button>
+        <button type="button" class="tablinks" data-tab="scripts">Scripts</button>
     </div>
 
-    <br>
-        <h3 class="text-3xl font-serif font-bold text-white">Dorking Settings</h3>
-    <div class="flex flex-col sm:flex-row gap-1">
+    <div id="scan" class="tabcontent">
+        <h3>Systems Scanner [V1.23]</h3>
+        <div class="container">
+            <input class="custom-input" type="text" id="input" placeholder="Enter keyword, email, IP, domain" />
+            <button type="button" id="lookup" class="custom-button">Scan</button>
+            <div id="results" class="results-text"></div>
 
-        <div class="space-y-4 space-x-1 w-0.5">
-            <label class="block">
-                <span class="block text-white font-semibold font-serif">Filetype (Seperate with Comma):</span>
-                <input id="filetype" type="text" placeholder="e.g. pdf, xls" class="w-full px-2 py-1 text-base font-serif text-white placeholder-white
-             border-2 border-amber-300 rounded-md focus:outline-none focus:ring-2 
-             focus:ring-amber-300 focus:border-amber-400 transition duration-300" />
-            </label>
-
-            <label class="block">
-                <span class="block text-white font-semibold font-serif">In URL:</span>
-                <input id="inurl" type="text" placeholder="e.g. login, admin" class="w-full px-2 py-1 text-base font-serif text-white placeholder-white 
-             border-2 border-amber-300 rounded-md focus:outline-none focus:ring-2 
-             focus:ring-amber-300 focus:border-amber-400 transition duration-300" />
-            </label>
-
-            <label class="block">
-                <span class="block text-white font-semibold font-serif">In Title:</span>
-                <input id="intitle" type="text" placeholder="e.g. index.of, dashboard" class="w-full px-2 py-1 text-base font-serif text-white placeholder-white 
-             border-2 border-amber-300 rounded-md focus:outline-none focus:ring-2 
-             focus:ring-amber-300 focus:border-amber-400 transition duration-300" />
-            </label>
         </div>
 
-        <button class="text-xl font-serif rounded-md border-2 
-           bg-amber-300 text-white border-amber-300 
-           hover:bg-amber-50 hover:text-amber-300 hover:border-amber-50 
-           transition duration-300 ease-in-out transform hover:-translate-y-0.5" id="saveDorkOptions">Save Dork
-            Settings</button>
+
+        <h3>Dorking Settings</h3>
+        <div class="container">
+                <h4>Filetypes (Separate with Comma):</h4>
+                <input class="custom-input" id="filetype" type="text" placeholder="e.g. pdf, xls" />
+
+                <h4>In URL:</h4>
+                <input class="custom-input" id="inurl" type="text" placeholder="e.g. login, admin" />
+
+                <h4>In Title:</h4>
+                <input class="custom-input" id="intitle" type="text" placeholder="e.g. index.of, dashboard" />
+
+            <button type="button" id="saveDorkOptions" class="custom-button">Save Dork Settings</button>
+        </div>
     </div>
 
+    <div id="tools" class="tabcontent">
+        <h3>Tools</h3>
+        <div class="container">
+            <input class="custom-input" type="text" id="inputTool" placeholder="Enter data" />
+            <button type="button" id="lookupTool" class="custom-button">Run Extension</button>
+            <button type="button" id="detect" class="custom-button">Detect</button>
+                        <div id="resultsTool" class="results-text"></div>
+        </div>
+             <h3>Extensions/Tools</h3>   
+    </div>
 
+    <div id="scripts" class="tabcontent">
+        <h3>Scripts</h3>
+        <p>Scripts content goes here...</p>
+    </div>
+
+    <script src="popup.js"></script>
 </body>
-<script src="popup.js"></script>
-
 </html>
