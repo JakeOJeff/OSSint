@@ -8,10 +8,6 @@ First off: thanks for considering contributing! 🎉
 - [Submitting Code Changes](#submitting-code-changes)
   - [Branch Workflow](#branch-workflow)
   - [Development Setup](#development-setup)
-  - [Writing Tests](#writing-tests)
-  - [Commit Style](#commit-style)
-  - [Pull Request Checklist](#pull-request-checklist)
-- [Code of Conduct](#code-of-conduct)
 
 ---
 
