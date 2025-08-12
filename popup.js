@@ -182,3 +182,25 @@ function isValidDomain(domain) {
     const pattern = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
     return pattern.test(domain);
 }
+
+
+  function handleAddTask() {
+
+
+    const text = taskInput.value.trim();
+    if (text === "") return;
+    if (text.length > 25) {
+      alert("Task text is too long! Please limit it to 25 characters.");
+      return;
+    }
+    
+    chrome.storage.local.get("tasks", (data) => {
+      const tasks = data.tasks || [];
+      const today = new Date().toISOString().split("T")[0];
+      tasks.push({ text, selected: false, priority, count: 1, repeat: false, date: today });
+      chrome.storage.local.set({ tasks }, () => {
+        taskInput.value = "";
+        loadTasks();
+      });
+    });
+  }
