@@ -31,24 +31,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-// Attach Save Dork Settings handler
-document.getElementById("saveDorkOptions").addEventListener("click", () => {
-    const filetypeRaw = document.getElementById("filetype").value.trim();
-    const inurl = document.getElementById("inurl").value.trim();
-    const intitle = document.getElementById("intitle").value.trim();
+    // Attach Save Dork Settings handler
+    document.getElementById("saveDorkOptions").addEventListener("click", () => {
+        const filetypeRaw = document.getElementById("filetype").value.trim();
+        const inurl = document.getElementById("inurl").value.trim();
+        const intitle = document.getElementById("intitle").value.trim();
 
-    const filetype = filetypeRaw
-        ? filetypeRaw.split(",").map(ft => ft.trim()).filter(Boolean)
-        : [];
+        const filetype = filetypeRaw
+            ? filetypeRaw.split(",").map(ft => ft.trim()).filter(Boolean)
+            : [];
 
-    chrome.storage.local.set({
-        dorkFilters: { filetype, inurl, intitle }
+        chrome.storage.local.set({
+            dorkFilters: { filetype, inurl, intitle }
+        });
+
+        if (filetype.length || inurl || intitle) {
+            alert("Settings have been saved to Session Storage!");
+        }
     });
+    // Attach add script handler
+    document.getElementById("addScriptButton").addEventListener("click", handleAddScript);
 
-    if (filetype.length || inurl || intitle) {
-        alert("Settings have been saved to Session Storage!");
-    }
-});
+    // Load saved scripts on startup
+    loadScripts();
 });
 
 // Tab switching logic
@@ -183,24 +188,73 @@ function isValidDomain(domain) {
     return pattern.test(domain);
 }
 
+function handleAddScript() {
+    const scriptFile = document.getElementById("scriptFileInput").files[0];
+    if (!scriptFile) return;
 
-  function handleAddTask() {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const content = e.target.result;
 
+        chrome.storage.local.get("scripts", (data) => {
+            const scripts = data.scripts || [];
 
-    const text = taskInput.value.trim();
-    if (text === "") return;
-    if (text.length > 25) {
-      alert("Task text is too long! Please limit it to 25 characters.");
-      return;
-    }
-    
-    chrome.storage.local.get("tasks", (data) => {
-      const tasks = data.tasks || [];
-      const today = new Date().toISOString().split("T")[0];
-      tasks.push({ text, selected: false, priority, count: 1, repeat: false, date: today });
-      chrome.storage.local.set({ tasks }, () => {
-        taskInput.value = "";
-        loadTasks();
-      });
+            const newScript = {
+                name: scriptFile.name,
+                content: content,
+                date: new Date().toISOString()
+            };
+
+            scripts.push(newScript);
+
+            chrome.storage.local.set({ scripts }, () => {
+                document.getElementById("scriptFileInput").value = "";
+
+                // Append directly instead of reloading whole list
+                appendScriptToList(newScript);
+            });
+        });
+    };
+
+    reader.readAsText(scriptFile);
+}
+
+function loadScripts() {
+    const scriptList = document.getElementById("scriptList");
+    scriptList.innerHTML = "Loading...";
+
+    chrome.storage.local.get("scripts", (data) => {
+        const scripts = data.scripts || [];
+        scriptList.innerHTML = "";
+
+        if (scripts.length === 0) {
+            scriptList.textContent = "No scripts uploaded yet.";
+            return;
+        }
+
+        scripts.forEach((script) => {
+            appendScriptToList(script);
+        });
     });
-  }
+}
+
+function appendScriptToList(script) {
+    const scriptList = document.getElementById("scriptList");
+
+    const div = document.createElement("div");
+    div.className = "script-item";
+    div.style.border = "1px solid #ccc";
+    div.style.margin = "5px 0";
+    div.style.padding = "5px";
+
+    const title = document.createElement("strong");
+    title.textContent = script.name;
+    div.appendChild(title);
+
+    // Optional: snippet of content
+    const pre = document.createElement("pre");
+    pre.textContent = script.content.substring(0, 100) + (script.content.length > 100 ? "..." : "");
+    div.appendChild(pre);
+
+    scriptList.appendChild(div);
+}
