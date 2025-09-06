@@ -48,7 +48,7 @@ h4 {
   padding-right: 5px;
   padding-top: 9px;
   padding-bottom: 9px;
-  
+
 }
 
 .custom-button {
@@ -71,7 +71,8 @@ h4 {
   padding-right: 10%;
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* <- Important */
+  align-items: stretch;
+  /* <- Important */
   justify-content: center;
 }
 
@@ -83,6 +84,7 @@ h4 {
   padding-left: 5%;
   padding-right: 5%;
 }
+
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -93,28 +95,43 @@ h4 {
   margin-right: 5%;
 }
 
-    .tab button {
-      background-color: inherit;
-        color: white;
-      float: left;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 14px 16px;
-      transition: 0.3s;
-    }
+.tab button {
+  background-color: inherit;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
 
-    .tab button:hover {
-      background-color: #3a3a3a;
-    }
+.tab button:hover {
+  background-color: #3a3a3a;
+}
 
-    .tab button.active {
-      background-color: #3f3f3f;
-    }
+.tab button.active {
+  background-color: #3f3f3f;
+}
 
-    .tabcontent {
-      display: none;
-    }
+.tabcontent {
+  display: none;
+}
+
+input[type="file"]::file-selector-button {
+  width: 35%;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
 
 /* body {
       font-family: sans-serif;
